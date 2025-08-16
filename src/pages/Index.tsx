@@ -9,6 +9,7 @@ import Contact from '@/pages/Contact';
 import { Book } from '@/data/books';
 
 const Index = () => {
+  console.log('Index component rendering');
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
