@@ -16,6 +16,11 @@ const Books = ({ onBookSelect }: BooksProps) => {
   const [selectedTag, setSelectedTag] = useState<string>('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'az' | 'za'>('newest');
 
+  // Debug logging
+  console.log('Books component rendered');
+  console.log('Books data:', books);
+  console.log('Books length:', books.length);
+
   const allTags = getAllTags();
 
   const filteredAndSortedBooks = useMemo(() => {
