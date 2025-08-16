@@ -13,13 +13,8 @@ interface BooksProps {
 
 const Books = ({ onBookSelect }: BooksProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTag, setSelectedTag] = useState<string>('');
+  const [selectedTag, setSelectedTag] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'az' | 'za'>('newest');
-
-  // Debug logging
-  console.log('Books component rendered');
-  console.log('Books data:', books);
-  console.log('Books length:', books.length);
 
   const allTags = getAllTags();
 
@@ -36,7 +31,7 @@ const Books = ({ onBookSelect }: BooksProps) => {
     }
 
     // Filter by tag
-    if (selectedTag) {
+    if (selectedTag && selectedTag !== 'all') {
       filtered = filtered.filter(book => book.tags.includes(selectedTag));
     }
 
@@ -61,11 +56,11 @@ const Books = ({ onBookSelect }: BooksProps) => {
 
   const clearFilters = () => {
     setSearchTerm('');
-    setSelectedTag('');
+    setSelectedTag('all');
     setSortBy('newest');
   };
 
-  const hasActiveFilters = searchTerm || selectedTag || sortBy !== 'newest';
+  const hasActiveFilters = searchTerm || (selectedTag && selectedTag !== 'all') || sortBy !== 'newest';
 
   return (
     <main className="flex-1 py-8">
@@ -103,7 +98,7 @@ const Books = ({ onBookSelect }: BooksProps) => {
                 <SelectValue placeholder="Filter by subject" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Subjects</SelectItem>
+                <SelectItem value="all">All Subjects</SelectItem>
                 {allTags.map((tag) => (
                   <SelectItem key={tag} value={tag}>
                     {tag}
@@ -135,7 +130,7 @@ const Books = ({ onBookSelect }: BooksProps) => {
                   Search: "{searchTerm}"
                 </Badge>
               )}
-              {selectedTag && (
+              {selectedTag && selectedTag !== 'all' && (
                 <Badge variant="secondary">
                   Subject: {selectedTag}
                 </Badge>
